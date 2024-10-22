@@ -11,6 +11,8 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         System.out.println(strings.get(1));
         strings.delete(1);
         System.out.println(strings.get(1));
+        strings.addTo(1, "Car");
+        System.out.println(strings.get(1));
     }
 
     public CustomArrayListImpl() {
@@ -42,9 +44,9 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         try {
             E[] temp = values;
             values = (E[]) new Object[temp.length + 1];
-            System.arraycopy(temp, 0, values, 0, index - 1);
+            System.arraycopy(temp, 0, values, 0, index);
             values[index] = e;
-            System.arraycopy(temp, index + 1, values, index + 1, temp.length + 1 - index);
+            System.arraycopy(temp, index + 1, values, index, temp.length - index - 1);
             return true;
         } catch (ClassCastException ex) {
             ex.printStackTrace();
