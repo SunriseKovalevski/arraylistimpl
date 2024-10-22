@@ -1,5 +1,7 @@
 import java.util.Iterator;
 public class CustomArrayListImpl<E> implements CustomArrayList<E>{
+    
+    private E[] values;
 
     public static void main(String[] args) {
         CustomArrayList<String> strings = new CustomArrayListImpl<>();
@@ -7,9 +9,9 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         strings.add("Car");
         strings.add("Garage");
         System.out.println(strings.get(1));
+        System.out.println(strings.delete(1));
+        System.out.println(strings.get(1));
     }
-    
-    private E[] values;
 
     public CustomArrayListImpl() {
         values = (E[]) new Object[0];
@@ -27,7 +29,6 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
             ex.printStackTrace();
         }
         return false;
-        
     }
 
     @Override
@@ -49,8 +50,15 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public void delete(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        try {
+            E[] temp = values;
+            values = (E[]) new Object[temp.length - 1];
+            System.arraycopy(temp, 0, values, 0, index);
+            int amount = temp.length - index - 1;
+            System.arraycopy(temp, index + 1, values, index, amount);
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
