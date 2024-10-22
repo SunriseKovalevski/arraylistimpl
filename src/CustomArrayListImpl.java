@@ -9,7 +9,7 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         strings.add("Car");
         strings.add("Garage");
         System.out.println(strings.get(1));
-        System.out.println(strings.delete(1));
+        strings.delete(1);
         System.out.println(strings.get(1));
     }
 
@@ -39,8 +39,17 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public boolean addTo(int index, E e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addTo'");
+        try {
+            E[] temp = values;
+            values = (E[]) new Object[temp.length + 1];
+            System.arraycopy(temp, 0, values, 0, index - 1);
+            values[index] = e;
+            System.arraycopy(temp, index + 1, values, index + 1, temp.length + 1 - index);
+            return true;
+        } catch (ClassCastException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     @Override
