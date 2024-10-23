@@ -78,10 +78,31 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         Arrays.fill(values, null);
     }
 
+    public void quickSort(E[] sortArr, int low, int high){
+        if (sortArr.length == 0 || low >= high) return;
+        int middle = low + (high - low) / 2;
+        E border = sortArr[middle];
+        int i = low;
+        int j = high;
+        while (i <= j) {
+            while (sortArr[i] < border) i++;
+            while (sortArr[j] > border) j--;
+            if (i <= j) {
+                int swap = sortArr[i];
+                sortArr[i] = sortArr[j];
+                sortArr[j] = swap;
+                i++;
+                j--;
+            }
+        }
+
+        if (low < j) quickSort(sortArr, low, j);
+        if (high > i) quickSort(sortArr, i, high);
+    }
+
     @Override
     public void sort() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sort'");
+        
     }
 
 }
