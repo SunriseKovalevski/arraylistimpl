@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Iterator;
 public class CustomArrayListImpl<E> implements CustomArrayList<E>{
     
@@ -74,8 +75,7 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        Arrays.fill(values, null);
     }
 
     @Override
