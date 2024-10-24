@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Comparator;
 public class CustomArrayListImpl<E> implements CustomArrayList<E>{
     
     private E[] values;
@@ -9,11 +10,20 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         strings.add("House");
         strings.add("Car");
         strings.add("Garage");
+        strings.add("Garage2");
+        strings.add("Garage3");
         System.out.println(strings.get(1));
         strings.delete(1);
         System.out.println(strings.get(1));
         strings.addTo(1, "Car");
         System.out.println(strings.get(1));
+        QuickSort.sort(strings,Comparator.naturalOrder());
+        System.out.println(strings.get(0));
+        System.out.println(strings.get(1));
+        System.out.println(strings.get(2));
+        System.out.println(strings.get(3));
+        System.out.println(strings.get(4));
+
     }
 
     public CustomArrayListImpl() {
@@ -47,7 +57,7 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
             values = (E[]) new Object[temp.length + 1];
             System.arraycopy(temp, 0, values, 0, index);
             values[index] = e;
-            System.arraycopy(temp, index + 1, values, index, temp.length - index - 1);
+            System.arraycopy(temp, index, values, index + 1, temp.length - index);
             return true;
         } catch (ClassCastException ex) {
             ex.printStackTrace();
@@ -78,15 +88,15 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         Arrays.fill(values, null);
     }
 
-    public void quickSort(E[] sortArr, int low, int high){
+  /**   public void quickSort(E[] sortArr, int low, int high){
         if (sortArr.length == 0 || low >= high) return;
         int middle = low + (high - low) / 2;
         E border = sortArr[middle];
         int i = low;
         int j = high;
         while (i <= j) {
-            while (sortArr[i] < border) i++;
-            while (sortArr[j] > border) j--;
+            while (sortArr[i].compareTo(border) < 0) i++;
+            while (sortArr[j].compareTo(border) > 0) j--;
             if (i <= j) {
                 int swap = sortArr[i];
                 sortArr[i] = sortArr[j];
@@ -98,11 +108,18 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
         if (low < j) quickSort(sortArr, low, j);
         if (high > i) quickSort(sortArr, i, high);
+    }*/
+
+    @Override
+    public int size() {
+        return values.length;
     }
 
     @Override
-    public void sort() {
-        
+    public E set(int index, E element) {
+        E oldElement = (E) values[index];
+        values[index] = element;
+        return oldElement;
     }
 
 }
