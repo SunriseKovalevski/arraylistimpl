@@ -52,34 +52,42 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public boolean addTo(int index, E e) {
-        try {
-            E[] temp = values;
-            values = (E[]) new Object[temp.length + 1];
-            System.arraycopy(temp, 0, values, 0, index);
-            values[index] = e;
-            System.arraycopy(temp, index, values, index + 1, temp.length - index);
-            return true;
-        } catch (ClassCastException ex) {
-            ex.printStackTrace();
+        if(checkIndex(index)){
+            try {
+                E[] temp = values;
+                values = (E[]) new Object[temp.length + 1];
+                System.arraycopy(temp, 0, values, 0, index);
+                values[index] = e;
+                System.arraycopy(temp, index, values, index + 1, temp.length - index);
+                return true;
+            } catch (ClassCastException ex) {
+                ex.printStackTrace();
+            }
+            return false;
         }
         return false;
     }
 
     @Override
     public E get(int index) {
-       return values[index];
+        if(checkIndex(index)){
+            return values[index];
+        }
+        return null;
     }
 
     @Override
     public void delete(int index) {
-        try {
-            E[] temp = values;
-            values = (E[]) new Object[temp.length - 1];
-            System.arraycopy(temp, 0, values, 0, index);
-            int amount = temp.length - index - 1;
-            System.arraycopy(temp, index + 1, values, index, amount);
-        } catch (ClassCastException ex) {
-            ex.printStackTrace();
+        if(checkIndex(index)){
+            try {
+                E[] temp = values;
+                values = (E[]) new Object[temp.length - 1];
+                System.arraycopy(temp, 0, values, 0, index);
+                int amount = temp.length - index - 1;
+                System.arraycopy(temp, index + 1, values, index, amount);
+            } catch (ClassCastException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -117,9 +125,19 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public E set(int index, E element) {
-        E oldElement = (E) values[index];
-        values[index] = element;
-        return oldElement;
+        if(checkIndex(index)){
+            E oldElement = (E) values[index];
+            values[index] = element;
+            return oldElement;
+        }
+        return null;
+    }
+
+    private boolean checkIndex(int index){
+        if ((index > values.length - 1) || (index < 0)){
+            throw new IndexOutOfBoundsException(index);
+        }
+        return true;
     }
 
 }
